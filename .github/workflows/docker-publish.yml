@@ -8,7 +8,7 @@ on:
 
 env:
   REGISTRY: docker.io
-  IMAGE_NAME: jangelsalinas/sportclub-img-gen
+  IMAGE_NAME: mullins85zgz/sportclub-img-gen
 
 jobs:
   build-and-push:
