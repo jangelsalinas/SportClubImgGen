@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  # Aplicación SportClub Image Generator
+  sportclub-img-gen:
+    image: jangelsalinas/sportclub-img-gen:latest
+    container_name: sportclub-img-gen
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - HOST=0.0.0.0
+      - PORT=3000
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Watchtower - Actualiza automáticamente los contenedores
+  watchtower:
+    image: containrrr/watchtower:latest
+    container_name: watchtower
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      # Revisa actualizaciones cada 5 minutos (300 segundos)
+      - WATCHTOWER_POLL_INTERVAL=300
+      # Limpia imágenes antiguas después de actualizar
+      - WATCHTOWER_CLEANUP=true
+      # Solo actualiza contenedores con la etiqueta enable=true
+      - WATCHTOWER_LABEL_ENABLE=true
+      # Zona horaria
+      - TZ=Europe/Madrid
+      # Notificaciones (opcional, descomentar si quieres recibir notificaciones)
+      # - WATCHTOWER_NOTIFICATIONS=shoutrrr
+      # - WATCHTOWER_NOTIFICATION_URL=smtp://username:password@host:port/?from=fromAddress&to=toAddress
+    command: --interval 300 --cleanup
