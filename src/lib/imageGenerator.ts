@@ -142,20 +142,20 @@ export async function generateBikeImage(data: BikeRideData): Promise<Buffer> {
     const horaFormateada = data.hora;
 
     // Dibujar fecha (parte superior)
-    ctx.font = 'bold 54px sans-serif';
+    ctx.font = 'bold 54px "DejaVu Sans", Arial, sans-serif';
     dibujarTextoConSombra(ctx, fechaFormateada, IMAGE_WIDTH / 2, 160, template.colorTexto);
 
     // Dibujar hora
-    ctx.font = '48px sans-serif';
+    ctx.font = '48px "DejaVu Sans", Arial, sans-serif';
     dibujarTextoConSombra(ctx, horaFormateada, IMAGE_WIDTH / 2, 240, template.colorTexto);
 
     // Dibujar lugar (destacado)
-    ctx.font = 'bold 86px sans-serif';
+    ctx.font = 'bold 86px "DejaVu Sans", Arial, sans-serif';
     const lugarTruncado = truncarTexto(ctx, data.lugar, IMAGE_WIDTH - 120);
     dibujarTextoConSombra(ctx, lugarTruncado, IMAGE_WIDTH / 2, IMAGE_HEIGHT / 2, template.colorTexto);
 
     // Dibujar descripción
-    ctx.font = '43px sans-serif';
+    ctx.font = '43px "DejaVu Sans", Arial, sans-serif';
     const descripcionTruncado = truncarTexto(ctx, data.descripcion, IMAGE_WIDTH - 120);
     dibujarTextoConSombra(ctx, descripcionTruncado, IMAGE_WIDTH / 2, IMAGE_HEIGHT / 2 + 135, template.colorTexto);
 
@@ -163,13 +163,13 @@ export async function generateBikeImage(data: BikeRideData): Promise<Buffer> {
     let posicionAdicional = IMAGE_HEIGHT - 215;
     
     if (data.distancia) {
-      ctx.font = 'bold 43px sans-serif';
+      ctx.font = 'bold 43px "DejaVu Sans", Arial, sans-serif';
       dibujarTextoConSombra(ctx, `📏 ${data.distancia}`, IMAGE_WIDTH / 2, posicionAdicional, template.colorTexto);
       posicionAdicional += 67;
     }
     
     if (data.dificultad) {
-      ctx.font = '43px sans-serif';
+      ctx.font = '43px "DejaVu Sans", Arial, sans-serif';
       const emojiDificultad = data.dificultad === 'fácil' ? '🟢' : data.dificultad === 'moderada' ? '🟡' : '🔴';
       dibujarTextoConSombra(
         ctx,
@@ -206,7 +206,7 @@ export async function generateBikeImage(data: BikeRideData): Promise<Buffer> {
       ctx.globalAlpha = 1.0;
     } else {
       // Fallback: texto si el logo no se pudo cargar
-      ctx.font = 'bold 32px sans-serif';
+      ctx.font = 'bold 32px "DejaVu Sans", Arial, sans-serif';
       dibujarTextoConSombra(ctx, 'SportClub', IMAGE_WIDTH / 2, IMAGE_HEIGHT - 67, template.colorTexto);
     }
 
