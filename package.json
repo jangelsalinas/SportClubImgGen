@@ -1,0 +1,17 @@
+{
+  "name": "sport-club-img-gen",
+  "type": "module",
+  "version": "1.1.0",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "generate-templates": "node scripts/generateTemplates.mjs"
+  },
+  "dependencies": {
+    "@astrojs/node": "^9.0.0",
+    "astro": "^5.14.5",
+    "canvas": "^2.11.2"
+  }
+}

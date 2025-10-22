@@ -1,0 +1,198 @@
+---
+/**
+ * Componente del formulario para capturar datos de la salida
+ */
+---
+
+<div class="card">
+  <h2>📝 Datos de la Salida</h2>
+  
+  <form id="bikeForm">
+    <!-- Fecha -->
+    <div class="form-group">
+      <label for="fecha" class="form-label required">Fecha</label>
+      <input 
+        type="date" 
+        id="fecha" 
+        name="fecha" 
+        class="form-input" 
+        required
+        max={new Date().toISOString().split('T')[0]}
+      />
+    </div>
+
+    <!-- Hora -->
+    <div class="form-group">
+      <label for="hora" class="form-label required">Hora de Salida</label>
+      <div style="display: flex; gap: 0.5rem;">
+        <select id="horaSelect" class="form-select" style="flex: 1;">
+          <option value="08:00">08:00</option>
+          <option value="09:00" selected>09:00</option>
+          <option value="10:00">10:00</option>
+          <option value="11:00">11:00</option>
+          <option value="12:00">12:00</option>
+          <option value="13:00">13:00</option>
+          <option value="14:00">14:00</option>
+          <option value="15:00">15:00</option>
+          <option value="16:00">16:00</option>
+          <option value="17:00">17:00</option>
+          <option value="18:00">18:00</option>
+          <option value="19:00">19:00</option>
+          <option value="custom">✏️ Personalizar</option>
+        </select>
+        <input 
+          type="text" 
+          id="hora" 
+          name="hora" 
+          class="form-input" 
+          style="flex: 1; display: none;"
+          placeholder="HH:MM"
+          pattern="^([01]?[0-9]|2[0-3]):[0-5][0-9]$"
+          title="Formato: HH:MM (ej: 09:00)"
+        />
+      </div>
+      <span class="form-hint">Selecciona una hora o elige "Personalizar" para escribir</span>
+    </div>
+
+    <!-- Lugar -->
+    <div class="form-group">
+      <label for="lugar" class="form-label required">Lugar/Ruta</label>
+      <input 
+        type="text" 
+        id="lugar" 
+        name="lugar" 
+        class="form-input" 
+        placeholder="Ej: Ruta del Cares"
+        maxlength="50"
+        required
+      />
+    </div>
+
+    <!-- Descripción -->
+    <div class="form-group">
+      <label for="descripcion" class="form-label required">Descripción</label>
+      <textarea 
+        id="descripcion" 
+        name="descripcion" 
+        class="form-textarea" 
+        placeholder="Describe la salida..."
+        maxlength="200"
+        required
+      ></textarea>
+      <span class="form-hint" id="charCount">0 / 200 caracteres</span>
+    </div>
+
+    <!-- Plantilla -->
+    <div class="form-group">
+      <label class="form-label">Plantilla</label>
+      <div class="template-selector">
+        <div class="template-option">
+          <input type="radio" id="template1" name="plantilla" value="template1" checked />
+          <label for="template1">
+            <span class="template-icon">🏔️</span>
+            <span class="template-name">Montaña</span>
+          </label>
+        </div>
+        <div class="template-option">
+          <input type="radio" id="template2" name="plantilla" value="template2" />
+          <label for="template2">
+            <span class="template-icon">🛣️</span>
+            <span class="template-name">Carretera</span>
+          </label>
+        </div>
+        <div class="template-option">
+          <input type="radio" id="template3" name="plantilla" value="template3" />
+          <label for="template3">
+            <span class="template-icon">🏙️</span>
+            <span class="template-name">Ciudad</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Distancia (opcional) -->
+    <div class="form-group">
+      <label for="distancia" class="form-label">Distancia</label>
+      <input 
+        type="text" 
+        id="distancia" 
+        name="distancia" 
+        class="form-input" 
+        placeholder="Ej: 45 km"
+        maxlength="20"
+      />
+    </div>
+
+    <!-- Dificultad (opcional) -->
+    <div class="form-group">
+      <label for="dificultad" class="form-label">Dificultad</label>
+      <select id="dificultad" name="dificultad" class="form-select">
+        <option value="">Selecciona...</option>
+        <option value="fácil">🟢 Fácil</option>
+        <option value="moderada">🟡 Moderada</option>
+        <option value="difícil">🔴 Difícil</option>
+      </select>
+    </div>
+
+    <!-- Botón submit -->
+    <button type="submit" class="btn btn-primary" id="submitBtn">
+      <span id="btnText">🎨 Generar Imagen</span>
+      <span id="btnLoading" style="display: none;" class="loading"></span>
+    </button>
+  </form>
+</div>
+
+<script>
+  // Contador de caracteres
+  const descripcionInput = document.getElementById('descripcion') as HTMLTextAreaElement;
+  const charCount = document.getElementById('charCount');
+  
+  descripcionInput?.addEventListener('input', () => {
+    if (charCount) {
+      charCount.textContent = `${descripcionInput.value.length} / 200 caracteres`;
+    }
+  });
+
+  // Establecer fecha actual por defecto
+  const fechaInput = document.getElementById('fecha') as HTMLInputElement;
+  if (fechaInput) {
+    fechaInput.value = new Date().toISOString().split('T')[0];
+  }
+
+  // Manejo del selector de hora con opción personalizada
+  const horaSelect = document.getElementById('horaSelect') as HTMLSelectElement;
+  const horaInput = document.getElementById('hora') as HTMLInputElement;
+  
+  // Establecer hora por defecto en 09:00
+  if (horaInput && horaSelect) {
+    horaInput.value = '09:00';
+    
+    horaSelect.addEventListener('change', () => {
+      if (horaSelect.value === 'custom') {
+        // Mostrar input y ocultar select
+        horaSelect.style.display = 'none';
+        horaInput.style.display = 'block';
+        horaInput.required = true;
+        horaInput.focus();
+        // Mantener el valor anterior o vaciar
+        if (horaInput.value === '') {
+          horaInput.value = '09:00';
+        }
+      } else {
+        // Actualizar el valor del input oculto
+        horaInput.value = horaSelect.value;
+      }
+    });
+    
+    // Permitir volver al select desde el input
+    horaInput.addEventListener('blur', () => {
+      // Verificar si el valor del input coincide con alguna opción del select
+      const options = Array.from(horaSelect.options).map(opt => opt.value).filter(v => v !== 'custom');
+      if (options.includes(horaInput.value)) {
+        horaSelect.value = horaInput.value;
+        horaSelect.style.display = 'block';
+        horaInput.style.display = 'none';
+      }
+    });
+  }
+</script>

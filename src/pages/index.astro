@@ -1,0 +1,47 @@
+---
+/**
+ * Página principal de SportClubImgGen
+ */
+import ImageForm from '../components/ImageForm.astro';
+import ImagePreview from '../components/ImagePreview.astro';
+import '../styles/global.css';
+
+const title = 'Z5 Generador de Imágenes para Salidas en Bici / Running';
+const description = 'Generador de imágenes para compartir tus salidas en bici';
+---
+
+<html lang="es">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="description" content={description} />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+	</head>
+	<body>
+		<div class="container">
+			<header class="header">
+				<div style="display: flex; align-items: center; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1rem;">
+					<img 
+						src="/logos/logoZ5.png" 
+						alt="Z5 SportClub Logo" 
+						style="height: 70px; width: auto;"
+						onerror="this.style.display='none'"
+					/>
+					<h1 style="margin: 0;">Generador de Imágenes para Salidas en Bici / Running</h1>
+				</div>
+				<p>Crea imágenes personalizadas de tus salidas en bici para compartir en redes sociales</p>
+			</header>
+
+			<main class="main-grid">
+				<ImageForm />
+				<ImagePreview />
+			</main>
+
+			<footer style="text-align: center; margin-top: 3rem; padding: 2rem; color: var(--color-text-light);">
+				<p>Generador de imágenes 1080x1080px | Optimizado para Instagram, Facebook y WhatsApp</p>
+			</footer>
+		</div>
+	</body>
+</html>

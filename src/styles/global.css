@@ -1,0 +1,337 @@
+/**
+ * Estilos globales de la aplicación
+ */
+
+:root {
+  --color-primary: #2563eb;
+  --color-primary-dark: #1e40af;
+  --color-secondary: #10b981;
+  --color-danger: #ef4444;
+  --color-text: #1f2937;
+  --color-text-light: #6b7280;
+  --color-bg: #2a3544; /* Gris oscuro azulado para el fondo general */
+  --color-bg-light: #374151; /* Gris más claro para las secciones */
+  --color-border: #4b5563;
+  --color-white: #ffffff;
+  --border-radius: 8px;
+  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.3), 0 1px 2px -1px rgb(0 0 0 / 0.3);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.3), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--color-white);
+  margin-bottom: 0.5rem;
+}
+
+.header p {
+  font-size: 1.125rem;
+  color: #9ca3af; /* Color más claro para mejor contraste en fondo oscuro */
+}
+
+.main-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .main-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.card {
+  background-color: var(--color-bg-light);
+  border-radius: var(--border-radius);
+  padding: 2rem;
+  box-shadow: var(--shadow);
+}
+
+.card h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: var(--color-white);
+}
+
+/* Formulario */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: #e5e7eb; /* Color claro para etiquetas en fondo oscuro */
+}
+
+.form-label.required::after {
+  content: ' *';
+  color: var(--color-danger);
+}
+
+.form-input,
+.form-textarea,
+.form-select {
+  width: 100%;
+  padding: 0.625rem 0.875rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  font-family: inherit;
+  background-color: #1f2937; /* Fondo oscuro para inputs */
+  color: var(--color-white);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.form-hint {
+  display: block;
+  font-size: 0.875rem;
+  color: #9ca3af; /* Color más claro para hints */
+  margin-top: 0.25rem;
+}
+
+/* Templates */
+.template-selector {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.template-option {
+  position: relative;
+}
+
+.template-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+}
+
+.template-option label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  border: 2px solid var(--color-border);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.template-option input[type="radio"]:checked + label {
+  border-color: var(--color-primary);
+  background-color: rgba(37, 99, 235, 0.05);
+}
+
+.template-option label:hover {
+  border-color: var(--color-primary);
+}
+
+.template-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.template-name {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #e5e7eb; /* Color claro para mejor visibilidad en fondo oscuro */
+}
+
+/* Botones */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--color-primary-dark);
+}
+
+.btn-secondary {
+  background-color: var(--color-secondary);
+  color: var(--color-white);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: #059669;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/* Preview */
+.preview-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.preview-empty {
+  width: 100%;
+  max-width: 540px;
+  aspect-ratio: 1 / 1;
+  border: 2px dashed var(--color-border);
+  border-radius: var(--border-radius);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #9ca3af; /* Color más claro para texto */
+  text-align: center;
+  padding: 2rem;
+}
+
+.preview-empty-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.preview-image {
+  width: 100%;
+  max-width: 540px;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-lg);
+  object-fit: contain;
+}
+
+/* Loading */
+.loading {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Toast notification */
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background-color: var(--color-text);
+  color: var(--color-white);
+  padding: 1rem 1.5rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  animation: slideIn 0.3s ease;
+  z-index: 1000;
+}
+
+.toast.success {
+  background-color: var(--color-secondary);
+}
+
+.toast.error {
+  background-color: var(--color-danger);
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .header h1 {
+    font-size: 2rem;
+  }
+  
+  .preview-empty,
+  .preview-image {
+    max-width: 100%;
+  }
+  
+  .template-selector {
+    grid-template-columns: 1fr;
+  }
+  
+  .toast {
+    left: 1rem;
+    right: 1rem;
+  }
+}
