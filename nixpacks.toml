@@ -3,11 +3,11 @@ providers = ["node"]
 [phases.setup]
 nixPkgs = ["nodejs_20", "cairo", "pango", "libjpeg", "giflib", "librsvg", "pixman"]
 
-[phases.build]
-cmds = ["npm install", "npm run build"]
+[phases.install]
+cmds = ["npm install"]
 
-[phases.deploy]
-cmds = ["npm run start"]
+[phases.build]
+cmds = ["npm run build"]
 
 [start]
 cmd = "npm run start"
