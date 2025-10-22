@@ -1,8 +1,17 @@
 # Usar Node.js 20 con Alpine Linux (más ligero)
 FROM node:20-alpine
 
-# Instalar dependencias del sistema necesarias para node-canvas
+# Instalar dependencias del sistema necesarias para node-canvas y compilación
 RUN apk add --no-cache \
+    python3 \
+    make \
+    g++ \
+    cairo-dev \
+    pango-dev \
+    jpeg-dev \
+    giflib-dev \
+    librsvg-dev \
+    pixman-dev \
     cairo \
     pango \
     jpeg \
@@ -10,7 +19,8 @@ RUN apk add --no-cache \
     librsvg \
     pixman \
     ttf-dejavu \
-    fontconfig
+    fontconfig \
+    && ln -sf python3 /usr/bin/python
 
 # Crear directorio de la aplicación
 WORKDIR /app
