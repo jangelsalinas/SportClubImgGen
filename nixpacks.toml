@@ -1,13 +1,10 @@
 providers = ["node"]
 
 [phases.setup]
-nixPkgs = ["nodejs_20", "cairo", "pango", "libjpeg", "giflib", "librsvg", "pixman", "dejavu_fonts"]
+nixPkgs = ["nodejs_20", "cairo", "pango", "libjpeg", "giflib", "librsvg", "pixman", "dejavu_fonts", "fontconfig"]
 
 [phases.install]
 cmds = ["npm install"]
 
 [phases.build]
 cmds = ["npm run build"]
-
-[start]
-cmd = "npm run start"
