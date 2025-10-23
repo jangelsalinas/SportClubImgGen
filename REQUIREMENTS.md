@@ -29,7 +29,7 @@ Aplicación web construida con Astro que genera imágenes personalizadas (1080x1
 
 ### Deployment (Recomendado)
 - **Node.js server** - Para SSR y node-canvas
-- Alternativas: DigitalOcean, Railway, Render, VPS
+- Alternativas: DigitalOcean, Render, VPS, Sistema local con Docker
 
 ## 📦 Estructura del Proyecto
 

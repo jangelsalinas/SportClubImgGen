@@ -213,9 +213,9 @@ Esta aplicación requiere:
 
 Opciones recomendadas:
 - DigitalOcean App Platform
-- Railway
 - Render
 - VPS con Node.js
+- Sistema local con Docker
 
 ---
 
