@@ -2,12 +2,25 @@
 /**
  * Componente del formulario para capturar datos de la salida
  */
+import { rutasPredefinidas } from '../lib/rutasPredefinidas';
 ---
 
 <div class="card">
   <h2>📝 Datos de la Salida</h2>
   
   <form id="bikeForm">
+    <!-- Selector de Rutas Predefinidas (NUEVO) -->
+    <div class="form-group">
+      <label for="rutaPredefinida" class="form-label">🚴 Ruta Predefinida (opcional)</label>
+      <select id="rutaPredefinida" name="rutaPredefinida" class="form-select">
+        <option value="">-- Selecciona una ruta o crea una personalizada --</option>
+        {rutasPredefinidas.map((ruta) => (
+          <option value={ruta.id}>{ruta.nombre}</option>
+        ))}
+      </select>
+      <span class="form-hint">Selecciona una ruta para precargar los datos automáticamente</span>
+    </div>
+
     <!-- Fecha -->
     <div class="form-group">
       <label for="fecha" class="form-label required">Fecha</label>
@@ -192,6 +205,96 @@
         horaSelect.value = horaInput.value;
         horaSelect.style.display = 'block';
         horaInput.style.display = 'none';
+      }
+    });
+  }
+
+  // Manejo de rutas predefinidas
+  const rutaPredefinidaSelect = document.getElementById('rutaPredefinida') as HTMLSelectElement;
+  const lugarInput = document.getElementById('lugar') as HTMLInputElement;
+  const descripcionTextarea = document.getElementById('descripcion') as HTMLTextAreaElement;
+  const distanciaInput = document.getElementById('distancia') as HTMLInputElement;
+  const dificultadSelect = document.getElementById('dificultad') as HTMLSelectElement;
+  
+  // Datos de rutas predefinidas (deben coincidir con el archivo de configuración)
+  const rutasData = {
+    'cares': {
+      lugar: 'Picos de Europa',
+      descripcion: 'Espectacular ruta por la garganta del Cares con vistas impresionantes',
+      distancia: '12 km',
+      dificultad: 'moderada',
+      plantilla: 'template1'
+    },
+    'covadonga': {
+      lugar: 'Asturias',
+      descripcion: 'Ascenso a los míticos lagos con paisajes de montaña',
+      distancia: '25 km',
+      dificultad: 'difícil',
+      plantilla: 'template1'
+    },
+    'naranjo': {
+      lugar: 'Picos de Europa',
+      descripcion: 'Ruta hasta el emblemático Naranjo de Bulnes',
+      distancia: '18 km',
+      dificultad: 'difícil',
+      plantilla: 'template1'
+    },
+    'senda-costera': {
+      lugar: 'Costa Asturiana',
+      descripcion: 'Ruta panorámica por la costa con vistas al Cantábrico',
+      distancia: '30 km',
+      dificultad: 'fácil',
+      plantilla: 'template2'
+    },
+    'puerto-pajares': {
+      lugar: 'León - Asturias',
+      descripcion: 'Clásico puerto de montaña con alto desnivel',
+      distancia: '35 km',
+      dificultad: 'difícil',
+      plantilla: 'template1'
+    },
+    'ruta-urbana': {
+      lugar: 'Centro Ciudad',
+      descripcion: 'Paseo urbano por la ciudad y sus alrededores',
+      distancia: '15 km',
+      dificultad: 'fácil',
+      plantilla: 'template3'
+    }
+  };
+
+  if (rutaPredefinidaSelect) {
+    rutaPredefinidaSelect.addEventListener('change', () => {
+      const rutaId = rutaPredefinidaSelect.value as keyof typeof rutasData;
+      
+      if (rutaId && rutasData[rutaId]) {
+        const ruta = rutasData[rutaId];
+        
+        // Precargar datos en el formulario
+        if (lugarInput) lugarInput.value = ruta.lugar;
+        if (descripcionTextarea) {
+          descripcionTextarea.value = ruta.descripcion;
+          // Actualizar contador de caracteres
+          if (charCount) {
+            charCount.textContent = `${descripcionTextarea.value.length} / 200 caracteres`;
+          }
+        }
+        if (distanciaInput) distanciaInput.value = ruta.distancia || '';
+        if (dificultadSelect) dificultadSelect.value = ruta.dificultad || '';
+        
+        // Seleccionar plantilla si existe
+        const plantillaRadio = document.querySelector(`input[name="plantilla"][value="${ruta.plantilla}"]`) as HTMLInputElement;
+        if (plantillaRadio) {
+          plantillaRadio.checked = true;
+        }
+        
+        // Mostrar feedback visual
+        rutaPredefinidaSelect.style.borderColor = '#10b981';
+        setTimeout(() => {
+          rutaPredefinidaSelect.style.borderColor = '';
+        }, 1000);
+      } else {
+        // Si se deselecciona, limpiar solo si los campos están vacíos
+        // (para no borrar datos personalizados)
       }
     });
   }

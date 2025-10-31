@@ -60,7 +60,7 @@ El proyecto incluye:
    
    services:
      sportclub-img-gen:
-       image: jangelsalinas/sportclub-img-gen:latest
+       image: mullins85zgz/sportclub-img-gen:latest
        container_name: sportclub-img-gen
        restart: unless-stopped
        ports:
